@@ -8,13 +8,33 @@ namespace CompulsoryAssignmentPP
 
         public List<long> GetPrimesSequential(long first, long last)
         {
+            List<long> primes = new List<long>();
+            for (long i = first; i <= last; i++)
+            {
+                if (IsPrime(i))
+                {
+                    primes.Add(i);
+                }
 
+            }
+
+            return primes;
         }
 
 
         public List<long> GetPrimesParallel(long first, long last)
         {
+            List<long> primes = new List<long>();
+            for (long i = first; i <= last; i++)
+            {
+                if (IsPrime(i))
+                {
+                    primes.Add(i);
+                }
 
+            }
+
+            return primes;
         }
 
 
