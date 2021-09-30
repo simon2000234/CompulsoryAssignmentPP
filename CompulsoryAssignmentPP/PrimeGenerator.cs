@@ -1,31 +1,37 @@
-﻿using System.Numerics;
+﻿using System.Collections.Generic;
+using System.Numerics;
 
 namespace CompulsoryAssignmentPP
 {
     public class PrimeGenerator
     {
 
-
-
-
-
-
-
-
-
-
-
-        private static bool IsPrime(BigInteger number)
+        public List<long> GetPrimesSequential(long first, long last)
         {
-            if (number <= BigInteger.One) return false;
-            if (number == (BigInteger)2) return true;
-            if (number % 2 == BigInteger.Zero) return false;
+
+        }
 
 
-            var boundary = BigInteger.Divide(number, 2);
+        public List<long> GetPrimesParallel(long first, long last)
+        {
 
-            for (BigInteger i = 3; i <= boundary; i += 2)
-                if (number % i == BigInteger.Zero)
+        }
+
+
+
+
+
+        private static bool IsPrime(long number)
+        {
+            if (number <= 1) return false;
+            if (number == 2) return true;
+            if (number % 2 == 0) return false;
+
+
+            var boundary = number / 2;
+
+            for (long i = 3; i <= boundary; i += 2)
+                if (number % i == 0)
                     return false;
 
             return true;
