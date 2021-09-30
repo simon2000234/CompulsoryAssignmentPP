@@ -7,13 +7,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using CompulsoryAssignmentPP;
 
 namespace WinFormsPrimeSearch
 {
     public partial class Form1 : Form
     {
-        long lowInput;
-        long highInput;
+        private long lowInput;
+        private long highInput;
+        private PrimeGenerator pg;
         public Form1()
         {
             InitializeComponent();
@@ -21,6 +23,7 @@ namespace WinFormsPrimeSearch
             listBox1.MultiColumn = true;
             // Set the selection mode to multiple and extended.
             listBox1.SelectionMode = SelectionMode.MultiExtended;
+            pg = new PrimeGenerator();
         }
 
         private bool CheckIfValidInput()
@@ -44,10 +47,19 @@ namespace WinFormsPrimeSearch
         {
             if(!CheckIfValidInput())
                 return;
+            var uictx = TaskScheduler.FromCurrentSynchronizationContext();
 
-            listBox1.BeginUpdate();
-            //add The stuff here
-            listBox1.EndUpdate();
+
+            Task.Factory.StartNew(() =>
+            {
+                var list = pg.GetPrimesParallel(lowInput, highInput);
+                return list;
+            }).ContinueWith((result) =>
+            {
+                listBox1.BeginUpdate();
+                listBox1.DataSource = result.Result;
+                listBox1.EndUpdate();
+            }, uictx);
         }
 
         //Parallel
