@@ -6,7 +6,10 @@ namespace CompulsoryAssignmentPP
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            PrimeGenerator primeGenerator = new PrimeGenerator();
+            var list = primeGenerator.GetPrimesSequential(1, 1_000_000);
+
+
         }
     }
 }
