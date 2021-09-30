@@ -47,19 +47,7 @@ namespace WinFormsPrimeSearch
         {
             if(!CheckIfValidInput())
                 return;
-            var uictx = TaskScheduler.FromCurrentSynchronizationContext();
-
-
-            Task.Factory.StartNew(() =>
-            {
-                var list = pg.GetPrimesParallel(lowInput, highInput);
-                return list;
-            }).ContinueWith((result) =>
-            {
-                listBox1.BeginUpdate();
-                listBox1.DataSource = result.Result;
-                listBox1.EndUpdate();
-            }, uictx);
+            
         }
 
         //Parallel
@@ -67,10 +55,19 @@ namespace WinFormsPrimeSearch
         {
             if (!CheckIfValidInput())
                 return;
+            var uictx = TaskScheduler.FromCurrentSynchronizationContext();
 
-            listBox1.BeginUpdate();
-            //add The stuff here
-            listBox1.EndUpdate();
+
+            Task.Factory.StartNew(() =>
+            {
+                var list = pg.GetPrimesSequential(lowInput, highInput);
+                return list;
+            }).ContinueWith((result) =>
+            {
+                listBox1.BeginUpdate();
+                listBox1.DataSource = result.Result;
+                listBox1.EndUpdate();
+            }, uictx);
         }
     }
 }
