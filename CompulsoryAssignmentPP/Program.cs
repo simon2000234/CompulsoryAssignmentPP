@@ -8,11 +8,11 @@ namespace CompulsoryAssignmentPP
         static void Main(string[] args)
         {
             long start = 1;
-            long end = 10000;
+            long end = 1_000_000;
 
             PrimeGenerator pg = new PrimeGenerator();
             var list = pg.GetPrimesSequential(1, 1_000_000);
-            TimeAction(() => pg.GetPrimesParallel(start, end).ForEach(prime => Console.WriteLine(""+prime)));
+            TimeAction(() => pg.GetPrimesParallel(start, end));
 
             Console.WriteLine("Hello World!");
             

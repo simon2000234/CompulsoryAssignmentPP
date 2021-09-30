@@ -1,11 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Numerics;
+using System.Threading.Tasks;
 
 namespace CompulsoryAssignmentPP
 {
     public class PrimeGenerator
     {
+        public Object lockThing = new object();
 
         public List<long> GetPrimesSequential(long first, long last)
         {
@@ -30,17 +35,25 @@ namespace CompulsoryAssignmentPP
 
         public List<long> GetPrimesParallel(long first, long last)
         {
-            List<long> primes = new List<long>();
-            for (long i = first; i <= last; i++)
+            List<long> primesParallel = new List<long>();
+
+            Parallel.ForEach(Partitioner.Create(first, last), range =>
             {
-                if (IsPrime(i))
+                for (long i = range.Item1; i < range.Item2; i++)
                 {
-                    primes.Add(i);
+                    bool isPrime = IsPrime(i);
+                    if (isPrime)
+                    {
+                        lock (lockThing)
+                        {
+                            primesParallel.Add(i);
+                        }
+                    }
                 }
+            });
+            primesParallel.Sort();
 
-            }
-
-            return primes;
+            return primesParallel;
         }
 
         private bool IsPrime(long number)
