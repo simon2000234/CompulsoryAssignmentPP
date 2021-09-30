@@ -21,7 +21,7 @@ namespace CompulsoryAssignmentPP
 
 
 
-        private static bool IsPrime(long number)
+        private bool IsPrime(long number)
         {
             if (number <= 1) return false;
             if (number == 2) return true;
