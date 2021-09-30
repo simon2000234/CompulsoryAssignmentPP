@@ -11,6 +11,7 @@ namespace CompulsoryAssignmentPP
             long end = 10000;
 
             PrimeGenerator pg = new PrimeGenerator();
+            var list = pg.GetPrimesSequential(1, 1_000_000);
             TimeAction(() => pg.GetPrimesParallel(start, end).ForEach(prime => Console.WriteLine(""+prime)));
 
             Console.WriteLine("Hello World!");

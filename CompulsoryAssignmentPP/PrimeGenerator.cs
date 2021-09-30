@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Numerics;
 
 namespace CompulsoryAssignmentPP
@@ -8,17 +9,22 @@ namespace CompulsoryAssignmentPP
 
         public List<long> GetPrimesSequential(long first, long last)
         {
-            List<long> primes = new List<long>();
-            for (long i = first; i <= last; i++)
-            {
-                if (IsPrime(i))
-                {
-                    primes.Add(i);
-                }
+            Stopwatch sw = new Stopwatch();
+            List<long> list = new List<long>();
 
+            sw.Start();
+            for (long i = first; i < last; i++)
+            {
+                bool result = IsPrime(i);
+                if (result == true)
+                {
+                    list.Add(i);
+                }
             }
 
-            return primes;
+            sw.Stop();
+            System.Console.WriteLine("Seq Time = " + sw.ElapsedMilliseconds / 1000);
+            return list;
         }
 
 
@@ -36,10 +42,6 @@ namespace CompulsoryAssignmentPP
 
             return primes;
         }
-
-
-
-
 
         private bool IsPrime(long number)
         {
